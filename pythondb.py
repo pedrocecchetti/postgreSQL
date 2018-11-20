@@ -96,3 +96,7 @@ for i in range(0,len(all_requests)):
     newitem = [bad_requests[i][0],day_percentage]
     requests_percentages.append(newitem)
     requests_percentages
+
+#Prints the results for the Day with the most Bad requests
+
+print("\n The day with the most bad requests was {} with {} % \n".format(requests_percentages[0][0],requests_percentages[0][1]))

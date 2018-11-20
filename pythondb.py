@@ -87,3 +87,12 @@ all_requests = c.fetchall()
 c.execute('''select cast(time as date) as data ,count(status) as number_of_requests from log where status like '404 NOT FOUND' group by data order by number_of_requests desc;''')
 bad_requests = c.fetchall()
 
+
+#Creating list for percentages 
+requests_percentages = []
+
+for i in range(0,len(all_requests)):
+    day_percentage = round((float(bad_requests[i][1])/float(all_requests[i][1])),3)*100
+    newitem = [bad_requests[i][0],day_percentage]
+    requests_percentages.append(newitem)
+    requests_percentages

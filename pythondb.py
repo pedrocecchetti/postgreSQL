@@ -59,7 +59,17 @@ c.execute('''select authors.name, authors_count.freq from
     authors join authors_count on 
     authors_count.author = authors.id;''')
 
+#Extracting the data from DB
 authors_views = c.fetchall()
 
-print(authors_views)
+#Creating lists for each info
+best_authors = []
+best_authors_count = []
 
+for i in range(0,len(most_viewed_articles)):
+    # Populating lists
+    best_authors.append(authors_views[i][0])
+    best_authors_count.append(authors_views[i][1])
+    #Printing info
+    print("The # {} most viewed author was '{}' with {} views\n"
+          .format(str(i+1),best_authors[i],int(best_authors_count[i])))

@@ -73,3 +73,17 @@ for i in range(0,len(most_viewed_articles)):
     #Printing info
     print("The # {} most viewed author was '{}' with {} views\n"
           .format(str(i+1),best_authors[i],int(best_authors_count[i])))
+
+# THIRD QUESTION
+print("###############################")
+print("Solving Third question....")
+print("###############################")
+
+#First selecting the number of requests per day
+c.execute('select cast(time as date) as data ,count(status) as number_of_requests from log group by data order by number_of_requests desc;')
+all_requests = c.fetchall()
+
+#Then selecting only BAD requests
+c.execute('''select cast(time as date) as data ,count(status) as number_of_requests from log where status like '404 NOT FOUND' group by data order by number_of_requests desc;''')
+bad_requests = c.fetchall()
+

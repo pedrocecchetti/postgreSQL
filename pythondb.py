@@ -18,6 +18,7 @@ most_viewed_articles = c.fetchall()
 articles_slugs = []
 articles_titles = []
 
+# Printing the most viewed articles and the number of views
 for i in range(0,len(most_viewed_articles)):
     
     articles_slugs.append((most_viewed_articles[i][0])[9:])

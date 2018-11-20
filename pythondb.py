@@ -5,6 +5,10 @@ import psycopg2
 db = psycopg2.connect("dbname=news")
 c = db.cursor()
 
+#Cleaning views from DB
+c.execute('drop view if exists authors_counts;')
+c.execute('drop view if exists slug_counts;')
+
 # FIRST QUESTION
 
 #Executing the first Query to fetch the data related to the most viewed articles

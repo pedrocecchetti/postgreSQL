@@ -14,7 +14,6 @@ print("###############################")
 print("Solving First question....")
 print("###############################")
 
-
 #Executing the first Query to fetch the data related to the most viewed articles
 c.execute('''select path, count(status) as num 
           from log 
@@ -45,6 +44,7 @@ c.execute('''create view slug_counts as
           from log 
           group by path 
           order by num desc offset 1 limit 10;''')
+db.commit()
 
 #Now it creates another view with The SUM OF views By author ID
 c.execute('''create view authors_counts as 
@@ -52,6 +52,7 @@ c.execute('''create view authors_counts as
           slug_counts join articles on slug_counts.substring = articles.slug  
           group by author 
           order by author;''')
+db.commit()
 
 #This query create the Table that answer the 2nd question.
 c.execute('''select authors.name, authors_count.freq from

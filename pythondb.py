@@ -29,6 +29,7 @@ for i in range(0,len(most_viewed_articles)):
     print("The # {} most viewed article was '{}' with {} views"
           .format(str(i+1),articles_titles[i][0],most_viewed_articles[i][1]))
 
+# SECOND QUESTION
 
 # Now it creates a view inside the database with the Slugs and the count per slugs
 c.execute('''create view slug_counts as 
@@ -37,7 +38,7 @@ c.execute('''create view slug_counts as
           group by path 
           order by num desc offset 1 limit 10;''')
 
-#Now it creates a view extracts a Table with The SUM OF views By author ID
+#Now it creates another view with The SUM OF views By author ID
 c.execute('''create view authors_counts as 
           select articles.author as author, sum(slug_counts.num) as freq from
           slug_counts join articles on slug_counts.substring = articles.slug  
@@ -48,4 +49,8 @@ c.execute('''create view authors_counts as
 c.execute('''select authors.name, authors_count.freq from
     authors join authors_count on 
     authors_count.author = authors.id;''')
+
+authors_views = c.fetchall()
+
+print(authors_views)
 

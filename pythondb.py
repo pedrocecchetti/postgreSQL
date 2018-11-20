@@ -10,6 +10,10 @@ c.execute('drop view if exists authors_counts;')
 c.execute('drop view if exists slug_counts;')
 
 # FIRST QUESTION
+print("###############################")
+print("Solving First question....")
+print("###############################")
+
 
 #Executing the first Query to fetch the data related to the most viewed articles
 c.execute('''select path, count(status) as num 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # First importing packages
 import psycopg2
 
@@ -45,7 +46,7 @@ c.execute('''create view slug_counts as
           select substring(path,10), count(status) as num
           from log
           group by path
-          order by num desc offset 1 limit 10;''')
+          order by num desc offset 1 limi   t 10;''')
 db.commit()
 
 # Now it creates another view with The SUM OF views By author ID

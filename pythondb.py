@@ -9,14 +9,15 @@ c = db.cursor()
 # Cleaning views from DB
 c.execute('drop view if exists authors_counts;')
 c.execute('drop view if exists slug_counts;')
-
+c.execute('drop view if exists path_access;')
 # FIRST QUESTION
 print("###############################")
 print("Solving First question....")
 print("###############################")
 
 # Executing the first Query to fetch the data related to most viewed articles
-c.execute('''select substring(path,10), count(status) as num
+c.execute('''create view path_acess as
+          select substring(path,10), count(status) as num
           from log
           group by path
           order by num desc offset 1 limit 3;''')

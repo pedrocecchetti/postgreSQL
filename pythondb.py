@@ -16,7 +16,7 @@ print("Solving First question....")
 print("###############################")
 
 # Executing the first Query to fetch the data related to most viewed articles
-c.execute('''select path, count(status) as num
+c.execute('''select substring(path,10), count(status) as num
           from log
           group by path
           order by num desc offset 1 limit 3;''')

@@ -10,32 +10,31 @@ c = db.cursor()
 c.execute('drop view if exists authors_counts;')
 c.execute('drop view if exists slug_counts;')
 c.execute('drop view if exists path_access;')
+
 # FIRST QUESTION
 print("###############################")
 print("Solving First question....")
 print("###############################")
 
 # Executing the first Query to fetch the data related to most viewed articles
-c.execute('''create view path_acess as
-          select substring(path,10), count(status) as num
+# and creating a view
+c.execute('''create view path_access as
+          select substring(path,10) as slug, count(status) as num
           from log
           group by path
           order by num desc offset 1 limit 3;''')
-most_viewed_articles = c.fetchall()
+db.commit()
 
-# Transforming the paths into the slugs and fetching the real Titles
-articles_slugs = []
-articles_titles = []
+c.execute('''select articles.title, path_access.num from
+           articles join path_access
+           on path_access.slug = articles.slug;''' )
+articles = c.fetchall()
 
 # Printing the most viewed articles and the number of views
-for i in range(0, len(most_viewed_articles)):
-    articles_slugs.append((most_viewed_articles[i][0])[9:])
-    c.execute('''select title from articles
-        where slug like '{}';'''.format(articles_slugs[i]))
-    articles_titles.append(c.fetchone())
+for i in range(0, len(articles)):
 
     print("The # {} most viewed article was '{}' with {} views\n "
-          .format(str(i+1), articles_titles[i][0], most_viewed_articles[i][1]))
+          .format(str(i+1), articles[i][0], articles[i][1]))
 
 # SECOND QUESTION
 print("###############################")

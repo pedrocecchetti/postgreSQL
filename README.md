@@ -45,6 +45,20 @@ You are also gonna need to create some `VIEWS` in the database.
         group by path
         order by num desc offset 1 limit 3;
 ``` 
+```
+    create view slug_counts as
+          select substring(path,10), count(status) as num
+          from log
+          group by path
+          order by num desc offset 1 limit 10;
+``` 
+```
+    create view authors_counts as
+          select articles.author as author, sum(slug_counts.num) as freq from
+          slug_counts join articles on slug_counts.substring = articles.slug
+          group by author
+          order by author;
+```
 
 These instructions will be 
 You can Download it [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)

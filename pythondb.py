@@ -21,9 +21,8 @@ def First_question():
 
     # Printing the most viewed articles and the number of views
     for i in range(0, len(articles)):
-
-        print("The # {} most viewed article was '{}' with {} views\n "
-          .format(str(i+1), articles[i][0], articles[i][1]))
+            print("The # {} most viewed article was '{}' with {} views\n "
+            .format(str(i+1), articles[i][0], articles[i][1]))
 
 def Second_question():
 
@@ -49,44 +48,33 @@ def Second_question():
 
 
 def Third_question():
+    
     # THIRD QUESTION
     print("###############################")
     print("Solving Third question....")
     print("###############################")
-
-    # First selecting the number of requests per day
-    c.execute('''select cast(time as date) as data ,
-                count(status) as number_of_requests
-                from log group by data
-                order by number_of_requests desc;''')
-    all_requests = c.fetchall()
-
-    # Then selecting only BAD requests
-    c.execute('''select cast(time as date) as data ,
-            count(status) as number_of_requests
-            from log
-            where status != '202 OK'
-            group by data
-            order by number_of_requests desc;''')
-
-    bad_requests = c.fetchall()
-
-
+    c.execute('''select all_requests.data,all_requests.number_of_requests 
+    as all_requests,        
+    bad_requests.number_of_requests as bad_requests
+    from all_requests join bad_requests
+    on all_requests.data = bad_requests.data order by bad_requests desc;''')
+    requests = c.fetchall()
     # Creating list for percentages
     requests_percentages = []
-
-    for i in range(0, len(all_requests)):
-        day_percentage = (float(bad_requests[i][1])/float(all_requests[i][1]))
+    for i in range(0, len(requests)):
+        day_percentage = (float(requests[i][2])/float(requests[i][1]))
         day_percentage = round(day_percentage, 4)
         day_percentage = day_percentage*100
-        newitem = [bad_requests[i][0], day_percentage]
+        newitem = [requests[i][0], day_percentage]
         requests_percentages.append(newitem)
-        requests_percentages
+    # Prints the results for the Day with the most Bad requests
+    print("\n The day with the most bad requests was {} with {} % \n"
+    .format(requests_percentages[0][0], requests_percentages[0][1]))
 
-        # Prints the results for the Day with the most Bad requests
+def Solve_problem():
+    First_question()
+    Second_question()
+    Third_question()
 
-        print("\n The day with the most bad requests was {} with {} % \n"
-        .format(requests_percentages[0][0], requests_percentages[0][1]))
-
-First_question()
-Second_question()
+if __name__ == '__main__':
+    Solve_problem()

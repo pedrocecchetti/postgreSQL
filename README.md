@@ -59,6 +59,23 @@ You are also gonna need to create some `VIEWS` in the database.
           group by author
           order by author;
 ```
+```
+create  view all_requests as
+                select cast(time as date) as data ,
+                count(status) as number_of_requests
+                from log group by data
+                order by number_of_requests desc;
+```
+```
+create  view bad_requests as
+                        select cast(time as date) as data ,
+                        count(status) as number_of_requests
+                        from log
+                        where log.status != '200 OK' 
+                        group by data
+                        order by number_of_requests desc;
+```
+
 
 These instructions will be 
 You can Download it [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)

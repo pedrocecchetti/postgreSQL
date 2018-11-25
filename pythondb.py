@@ -6,23 +6,25 @@ import psycopg2
 db = psycopg2.connect("dbname=news")
 c = db.cursor()
 
+
 def First_question():
     # FIRST QUESTION
     print("###############################")
     print("Solving First question....")
     print("###############################")
 
-    # Executing the first Query to fetch the data related to most viewed articles
+    # Executing the first Query to fetch the data with most viewed articles
     # and creating a view
     c.execute('''select articles.title, path_access.num from
            articles join path_access
-           on path_access.slug = articles.slug;''' )
+           on path_access.slug = articles.slug;''')
     articles = c.fetchall()
 
     # Printing the most viewed articles and the number of views
     for i in range(0, len(articles)):
             print("The # {} most viewed article was '{}' with {} views\n "
-            .format(str(i+1), articles[i][0], articles[i][1]))
+                  .format(str(i+1), articles[i][0], articles[i][1]))
+
 
 def Second_question():
 
@@ -44,17 +46,17 @@ def Second_question():
     for i in range(0, len(authors_views)):
         # Printing info
         print("The # {} most viewed author was '{}' with {} views\n"
-        .format(str(i+1), authors_views[i][0], authors_views[i][1]))
+              .format(str(i+1), authors_views[i][0], authors_views[i][1]))
 
 
 def Third_question():
-    
+
     # THIRD QUESTION
     print("###############################")
     print("Solving Third question....")
     print("###############################")
-    c.execute('''select all_requests.data,all_requests.number_of_requests 
-    as all_requests,        
+    c.execute('''select all_requests.data,all_requests.number_of_requests
+    as all_requests,
     bad_requests.number_of_requests as bad_requests
     from all_requests join bad_requests
     on all_requests.data = bad_requests.data order by bad_requests desc;''')
@@ -69,12 +71,14 @@ def Third_question():
         requests_percentages.append(newitem)
     # Prints the results for the Day with the most Bad requests
     print("\n The day with the most bad requests was {} with {} % \n"
-    .format(requests_percentages[0][0], requests_percentages[0][1]))
+          .format(requests_percentages[0][0], requests_percentages[0][1]))
+
 
 def Solve_problem():
     First_question()
     Second_question()
     Third_question()
+
 
 if __name__ == '__main__':
     Solve_problem()
